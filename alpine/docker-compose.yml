@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    network_mode: "host"
+
+  redis:
+    image: redis
+    container_name: redis
+    network_mode: "host"
+
+  lila-ws:
+    image: madkonix/noss-lila-ws:alpine-dev
+    container_name: lila-ws
+    volumes:
+      - /path/to/lila-ws/:/root/lila-ws/
+    depends_on:
+      - mongo
+      - redis
+    network_mode: "host"
+
+## Uncomment the section below to also run lila web interface
+#  lila-ui:
+#    image: madkonix/noss-lila-ui:alpine-dev
+#    container_name: lila-ui
+#    volumes:
+#      - /path/to/lila/:/root/lila/
+#    depends_on:
+#      - mongo
+#      - redis
+#    network_mode: "host"
